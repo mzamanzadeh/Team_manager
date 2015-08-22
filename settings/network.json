@@ -1,0 +1,30 @@
+    {
+        "referee_address" : "224.5.23.1",
+        "referee_port" : 10003,
+
+        "my_referee_address":"127.0.0.1",
+        "my_referee_port":10004,
+        "ssl_referee_address":"224.5.23.1",
+        "ssl_referee_port":10001,
+
+
+        "vision_address" : "224.5.23.2",
+        "vision_port" : 10002,
+
+        "grsim_vision_address":"224.5.23.2",
+        "grsim_vision_port":10022,
+
+        "ssl_vision_address":"224.5.23.2",
+        "ssl_vision_port":10002,
+
+        "grsim_command_address":"127.0.0.1",
+        "grsim_command_port":20011,
+
+        "visualizer_address":"127.0.0.1",
+        "visualizer_port":4010,
+
+        "plotter_address":"127.0.0.1",
+        "plotter_port":4002,
+
+        "plotter_enabled" : false
+    }
