@@ -344,7 +344,7 @@ void MainWindow::on_logPlayTB_clicked()
     {
         QString logName=ui->logFileNameLE->text();
         if(logName!=""){
-        qDebug()<<logName;
+        qDebug()<<logName<<"agar omg";
         }
     }
 }
@@ -352,5 +352,5 @@ void MainWindow::on_logPlayTB_clicked()
 void MainWindow::on_logFilebrowseTB_clicked()
 {
     logFileName=QFileDialog::getOpenFileName(this,tr("Open Log File (By MZ & MA)"), "/home", tr("Log Files (*.log)"));
-    ui->logFileNameLE->setText(logFileName);
+    ui->logFileNameLE->setText(logFileName);//Hey
 }
