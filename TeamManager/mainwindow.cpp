@@ -66,9 +66,11 @@ void MainWindow::initGUI()
 
 
     watchField = new WatchFieldGraphics();
+
+
     ui->fieldContainerLayout->addWidget(watchField);
 
-    watchField->setter();
+
     PMW = new PlotManagerWidget(this);
     ui->plotterLayout->addWidget(PMW);
 
@@ -342,9 +344,10 @@ void MainWindow::on_logPlayTB_clicked()
 {
     if(ui->chooseSourceLogFileRB->isChecked())
     {
-        QString logName=ui->logFileNameLE->text();
+        const char * logName=ui->logFileNameLE->text().toStdString().c_str();
         if(logName!=""){
         //qDebug()<<logName;
+            watchField->initializeQVectors(logName);
         }
     }
 }
@@ -353,4 +356,5 @@ void MainWindow::on_logFilebrowseTB_clicked()
 {
     logFileName=QFileDialog::getOpenFileName(this,tr("Open Log File (By MZ & MA)"), "/home", tr("Log Files (*.log)"));
     ui->logFileNameLE->setText(logFileName);
+
 }

@@ -13,6 +13,7 @@
 #include "graphics/graphic_arc.h"
 #include "general.h"
 #include "sslnamespace.h"
+#include <QTimer>
 
 #include "robotstate.h"
 
@@ -31,9 +32,11 @@ public:
     ~WatchFieldGraphics();
 
 public slots:
+    void initializeQVectors(const char * filename);
+    void updateGUI();
     void drawBounds();
 
-    void setter();
+
     void updateRobotState(const RobotState& st);
     void updateBallState(const BallState &st);
 //    void updateRobotPlan(int id, QVector<RobotState> path, QVector3D desired_vel, QVector3D applied_vel);
@@ -43,7 +46,8 @@ public slots:
 //    void updateRobotIntersect(float time, RobotState st);
     
 private:
-
+    QString logFileName;
+    QTimer *timer;
     QVector  <double>  *ballX;
        QVector  <double> *ballY;
 

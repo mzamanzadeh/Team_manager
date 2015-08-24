@@ -55,7 +55,8 @@ SOURCES += main.cpp\
     graphics/graphic_vec.cpp \
     messengerwidget.cpp \
     ../shared/proto/plotter/cpp/message_plotter.pb.cc \
-    robotstate.cpp
+    robotstate.cpp \
+    ../shared/proto/vision/cpp/ssl_referee.pb.cc
 
 HEADERS  += mainwindow.h \
     fieldgraphicsview.h \
@@ -95,7 +96,8 @@ HEADERS  += mainwindow.h \
     ui_plotmanagerwidget.h \
     ui_plotwidget.h \
     ui_scatterplotwidget.h \
-    robotstate.h
+    robotstate.h \
+    ../shared/proto/vision/cpp/ssl_referee.pb.h
 
 
 FORMS    += mainwindow.ui \
