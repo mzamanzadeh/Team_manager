@@ -127,7 +127,7 @@ long WatchFieldGraphics::getSize()
 void WatchFieldGraphics::updateRobotState(const RobotState &st)
 {
     int team = (int)st.color;
-    if(team >=2 || st.ID >= MAX_ID_NUM)
+    if(team >=2 || st.ID >= MAX_ID_NUM/2)
     {
         qDebug() << "invalid robot state";
         return;
@@ -156,6 +156,7 @@ void WatchFieldGraphics::updateBallState(const BallState &st)
     ball->setPos(st.position.X(), -st.position.Y());
     ballVel->setEnd(st.velocity.X(), -st.velocity.Y());
     ballTail->setNewPosition(QVector2D(st.position.X(), st.position.Y()));
+
 }
 void WatchFieldGraphics::initializeQVectors(const char * filename)
 {
@@ -184,6 +185,9 @@ void WatchFieldGraphics::initializeQVectors(const char * filename)
     yellowRobotsY = new QVector <QVector <double> *> ();
     RobotsX = new QVector <QVector < QVector <double> *> *> ();
     RobotsY = new QVector <QVector <QVector <double> *> *> ();
+    ball = new CircleGraphicsItem(22, QColor(255,120,0));
+    ballVel = new VectorGraphicsItem(Qt::cyan);
+    ballTail = new BallGraphicsItem(Qt::red);
 
 
     ballX = new QVector <double>();
@@ -307,8 +311,8 @@ RobotsY->push_back(blueRobotsY);
 
 timer = new QTimer;
 connect(timer,SIGNAL(timeout()),this,SLOT(updateGUI()));
-timer->start(30);
-qDebug()<<"initialize";
+timer->start(20);
+
 }
 void WatchFieldGraphics::updateGUI()
 {
@@ -336,26 +340,21 @@ void WatchFieldGraphics::updateGUI()
 //            qDebug()<<blueRobotsX->size();
             updateRobotState(rs_);
 
-            qDebug()<< rs_.ID << " "<<rs_.position.X();
-
         }
-
     counter++;
-    ball = new CircleGraphicsItem(22, QColor(255,120,0));
+
     scene.addItem(ball);
     ball->setZValue(7);
     ball->setX(ballX->at(counter));
     ball->setY(ballY->at(counter));
-    ballVel = new VectorGraphicsItem(Qt::cyan);
+
     ballVel->setParentItem(ball);
     ballVel->setZValue(8);
     counter++;
 
-    ballTail = new BallGraphicsItem(Qt::red);
+
     scene.addItem(ballTail);
     ballTail->setZValue(9);
-
-
     drawBounds();
 }
 
