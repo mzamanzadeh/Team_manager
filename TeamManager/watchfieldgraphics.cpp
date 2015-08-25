@@ -160,7 +160,7 @@ void WatchFieldGraphics::updateBallState(const BallState &st)
 void WatchFieldGraphics::initializeQVectors(const char * filename)
 {
     for(int tm=0; tm<2; tm++)
-        for(int i=0; i< 6; i++)
+        for(int i=0; i< MAX_ID_NUM/2; i++)
          {
 
             Qt::GlobalColor robot_color = ((SSL::Color)tm == SSL::Yellow)? Qt::yellow : Qt::blue;
