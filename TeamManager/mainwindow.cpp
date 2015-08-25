@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     isMainToolBarPinned = !isMainToolBarPinned;
     handlePinMainToolBarBtn();
 
+
 }
 
 MainWindow::~MainWindow()
@@ -69,7 +70,6 @@ void MainWindow::initGUI()
 
 
     ui->fieldContainerLayout->addWidget(watchField);
-
 
     PMW = new PlotManagerWidget(this);
     ui->plotterLayout->addWidget(PMW);
@@ -348,6 +348,7 @@ void MainWindow::on_logPlayTB_clicked()
         if(logName!=""){
         //qDebug()<<logName;
             watchField->initializeQVectors(logName);
+            ui->logSeekPlayingHSl->setMaximum(watchField->getSize());
         }
     }
 }
@@ -357,4 +358,13 @@ void MainWindow::on_logFilebrowseTB_clicked()
     logFileName=QFileDialog::getOpenFileName(this,tr("Open Log File (By MZ & MA)"), "/home", tr("Log Files (*.log)"));
     ui->logFileNameLE->setText(logFileName);
 
+}
+void MainWindow::on_logSeekPlayingHSl_valueChanged(int value)
+{
+    watchField->setCounter(ui->logSeekPlayingHSl->value());
+}
+
+void MainWindow::on_logPauseTB_clicked()
+{
+    watchField->timer->stop();
 }

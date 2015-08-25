@@ -114,6 +114,16 @@ void WatchFieldGraphics::drawBounds()
     scene.addPath(Goal2,QPen(QColor(Qt::black),20));
 }
 
+void WatchFieldGraphics::setCounter(long c)
+{
+    this->counter = c;
+}
+
+long WatchFieldGraphics::getSize()
+{
+    return ballX->size();
+}
+
 void WatchFieldGraphics::updateRobotState(const RobotState &st)
 {
     int team = (int)st.color;
@@ -149,14 +159,36 @@ void WatchFieldGraphics::updateBallState(const BallState &st)
 }
 void WatchFieldGraphics::initializeQVectors(const char * filename)
 {
+    for(int tm=0; tm<2; tm++)
+        for(int i=0; i< 6; i++)
+         {
+
+            Qt::GlobalColor robot_color = ((SSL::Color)tm == SSL::Yellow)? Qt::yellow : Qt::blue;
+            robot[tm][i] = new RobotGraphicsItem(robot_color, i);
+            robot[tm][i]->setZValue(2);
+            scene.addItem(robot[tm][i]);
+
+            number[tm][i] = new NumberGraphicsItem(i);
+            number[tm][i]->setColor(((Color)tm == Yellow)? Qt::yellow : Qt::blue);
+            number[tm][i]->setZValue(3);
+        //            number[tm][i]->setParentItem(robot[tm][i]);
+            scene.addItem(number[tm][i]);
+
+
+           }
+
     blueRobotsX = new QVector <QVector <double> *> ();
     blueRobotsY = new QVector <QVector <double> *> ();
 
     yellowRobotsX = new QVector <QVector <double> *> ();
     yellowRobotsY = new QVector <QVector <double> *> ();
+    RobotsX = new QVector <QVector < QVector <double> *> *> ();
+    RobotsY = new QVector <QVector <QVector <double> *> *> ();
+
 
     ballX = new QVector <double>();
     ballY = new QVector <double>();
+
 
     for(int i = 0 ;i < 6;i++)
     {
@@ -267,47 +299,57 @@ in.read((char*) &dataHeader, sizeof(dataHeader));
 } else {
     std::cerr << "Error log file is unsupported or corrupted!" << std::endl;
 }
+
+RobotsX->push_back(yellowRobotsX);
+RobotsX->push_back(blueRobotsX);
+RobotsY->push_back(yellowRobotsY);
+RobotsY->push_back(blueRobotsY);
+
 timer = new QTimer;
 connect(timer,SIGNAL(timeout()),this,SLOT(updateGUI()));
-timer->start(100);
+timer->start(30);
 qDebug()<<"initialize";
 }
 void WatchFieldGraphics::updateGUI()
 {
     for(int tm=0; tm<2; tm++)
-        for(int i=0; i< MAX_ID_NUM; i++)
+        for(int i=0; i< 6; i++)
         {
-            Qt::GlobalColor robot_color = ((SSL::Color)tm == SSL::Yellow)? Qt::yellow : Qt::blue;
-            robot[tm][i] = new RobotGraphicsItem(robot_color, i);
-            robot[tm][i]->setZValue(2);
-            scene.addItem(robot[tm][i]);
-
-            number[tm][i] = new NumberGraphicsItem(i);
-            number[tm][i]->setColor(((Color)tm == Yellow)? Qt::yellow : Qt::blue);
-            number[tm][i]->setZValue(3);
-//            number[tm][i]->setParentItem(robot[tm][i]);
-            scene.addItem(number[tm][i]);
 
 
+
+//            Qt::GlobalColor robot_color = ((SSL::Color)tm == SSL::Yellow)? Qt::yellow : Qt::blue;
+//            robot[tm][i] = new RobotGraphicsItem(robot_color, i);
+//            robot[tm][i]->setZValue(2);
+//            scene.addItem(robot[tm][i]);
+
+//            number[tm][i] = new NumberGraphicsItem(i);
+//            number[tm][i]->setColor(((Color)tm == Yellow)? Qt::yellow : Qt::blue);
+//            number[tm][i]->setZValue(3);
+//        //            number[tm][i]->setParentItem(robot[tm][i]);
+//            scene.addItem(number[tm][i]);
             RobotState rs_;
             rs_.ID = i;
             rs_.color = (Color)tm;
-            //rs_.position.setX(blueRobotsX->at(i)->at(++counter));
-
+            rs_.position.setX(RobotsX->at(tm)->at(i)->at(counter));
+            rs_.position.setY(RobotsY->at(tm)->at(i)->at(counter));
 //            qDebug()<<blueRobotsX->size();
             updateRobotState(rs_);
 
-            qDebug()<<"updsteGUI";
+            qDebug()<< rs_.ID << " "<<rs_.position.X();
+
         }
 
-
+    counter++;
     ball = new CircleGraphicsItem(22, QColor(255,120,0));
     scene.addItem(ball);
     ball->setZValue(7);
-
+    ball->setX(ballX->at(counter));
+    ball->setY(ballY->at(counter));
     ballVel = new VectorGraphicsItem(Qt::cyan);
     ballVel->setParentItem(ball);
     ballVel->setZValue(8);
+    counter++;
 
     ballTail = new BallGraphicsItem(Qt::red);
     scene.addItem(ballTail);

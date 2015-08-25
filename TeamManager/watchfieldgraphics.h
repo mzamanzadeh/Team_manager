@@ -30,11 +30,14 @@ class WatchFieldGraphics : public QWidget
 public:
     explicit WatchFieldGraphics(QWidget *parent = 0);
     ~WatchFieldGraphics();
+    QTimer *timer;
 
 public slots:
     void initializeQVectors(const char * filename);
     void updateGUI();
     void drawBounds();
+    void setCounter(long int c);
+    long int getSize();
 
 
     void updateRobotState(const RobotState& st);
@@ -47,7 +50,7 @@ public slots:
     
 private:
     QString logFileName;
-    QTimer *timer;
+
     QVector  <double>  *ballX;
        QVector  <double> *ballY;
 
@@ -57,6 +60,8 @@ private:
        long int counter;
        QVector <QVector <double> *> *yellowRobotsX;
        QVector <QVector <double> *> *yellowRobotsY;
+       QVector <QVector <QVector <double> *> *> *RobotsX;
+       QVector <QVector <QVector <double> *> *> *RobotsY;
 
     Ui::WatchFieldGraphics *ui;
     FieldGraphicsView* view;

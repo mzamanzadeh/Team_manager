@@ -58,6 +58,7 @@ SOURCES += main.cpp\
     robotstate.cpp \
     ../shared/proto/vision/cpp/ssl_referee.pb.cc
 
+
 HEADERS  += mainwindow.h \
     fieldgraphicsview.h \
     watchfieldgraphics.h \
@@ -97,6 +98,7 @@ HEADERS  += mainwindow.h \
     ui_plotwidget.h \
     ui_scatterplotwidget.h \
     robotstate.h \
+    ../shared/proto/vision/cpp/ssl_referee.pb.h \
     ../shared/proto/vision/cpp/ssl_referee.pb.h
 
 

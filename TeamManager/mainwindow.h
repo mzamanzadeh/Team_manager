@@ -60,6 +60,10 @@ private slots:
     void on_actionIdle_Vision_toggled(bool arg1);
     void on_logPlayTB_clicked();
         void on_logFilebrowseTB_clicked();
+        void on_logSeekPlayingHSl_valueChanged(int value);
+        void on_logPauseTB_clicked();
 };
 
 #endif // MAINWINDOW_H
+
+
